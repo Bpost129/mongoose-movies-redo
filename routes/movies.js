@@ -21,4 +21,7 @@ router.post('/:movieId/reviews', moviesCtrl.createReview)
 // DELETE /movies/:movieId
 router.delete('/:movieId', moviesCtrl.delete)
 
+// DELETE /movies/:movieId/reviews/:reviewId
+router.delete('/:movieId/reviews/:reviewId', moviesCtrl.deleteReview)
+
 export { router }

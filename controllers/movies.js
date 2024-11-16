@@ -59,11 +59,27 @@ async function deleteMovie(req, res) {
   }
 }
 
-function createReview(req, res) {
+async function createReview(req, res) {
   try {
-    Movie.findById(req.params.movieId)
+    await Movie.findById(req.params.movieId)
     .then(movie => {
       movie.reviews.push(req.body)
+      movie.save()
+      .then(() => {
+        res.redirect(`/movies/${movie._id}`)
+      })
+    })
+  } catch (error) {
+    console.log(error)
+    res.redirect('/movies')
+  }
+}
+
+async function deleteReview(req, res) {
+  try {
+    const movie = await Movie.findById(req.params.movieId)
+    .then(movie => {
+      movie.reviews.remove(req.params.reviewId)
       movie.save()
       .then(() => {
         res.redirect(`/movies/${movie._id}`)
@@ -82,5 +98,6 @@ export {
   show,
   deleteMovie as delete,
   createReview,
+  deleteReview,
 
 }

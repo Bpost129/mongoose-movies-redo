@@ -51,6 +51,14 @@
             <td><%= review.createdAt.toLocaleDateString() %></td>
             <td><%= review.content %></td>
             <td><%= review.rating %></td>
+            <td>
+              <form 
+                action="/movies/<%= movie._id %>/reviews/<%= review._id %>?_method=DELETE" 
+                method="POST"
+              >
+                <button type="submit">X</button>
+              </form>
+            </td>
           </tr>
         <% }) %>
       </tbody>
