@@ -59,11 +59,28 @@ async function deleteMovie(req, res) {
   }
 }
 
+function createReview(req, res) {
+  try {
+    Movie.findById(req.params.movieId)
+    .then(movie => {
+      movie.reviews.push(req.body)
+      movie.save()
+      .then(() => {
+        res.redirect(`/movies/${movie._id}`)
+      })
+    })
+  } catch (error) {
+    console.log(error)
+    res.redirect('/movies')
+  }
+}
+
 export {
   newMovie as new,
   create,
   index,
   show,
   deleteMovie as delete,
+  createReview,
 
 }
