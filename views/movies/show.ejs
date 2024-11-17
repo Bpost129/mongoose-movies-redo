@@ -11,11 +11,13 @@
     <div><%= movie.releaseYear %></div>
     <div>Rating: </div>
     <div><%= movie.mpaaRating %></div>
-    <div>Cast: </div>
-    <div><%= movie.cast.join(', ') %></div>
     <div>Now Showing: </div>
     <div><%= movie.nowShowing ? 'Yes' : 'Nope' %></div>
+    <%# start cast list %>
+    
+    <%# end cast list %>
   </section>
+  <%# add to cast form below this comment %>
   
   <h2>Reviews</h2>
   <form 
@@ -46,21 +48,26 @@
         </tr>
       </thead>
       <tbody>
+        <% let total = 0 %> 
         <% movie.reviews.forEach(function(review) { %>
+          <% total += review.rating %>
           <tr>
             <td><%= review.createdAt.toLocaleDateString() %></td>
             <td><%= review.content %></td>
             <td><%= review.rating %></td>
-            <td>
-              <form 
-                action="/movies/<%= movie._id %>/reviews/<%= review._id %>?_method=DELETE" 
-                method="POST"
-              >
-                <button type="submit">X</button>
+						<td>
+              <form action="/movies/<%= movie._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                <button>X</button>
               </form>
             </td>
           </tr>
         <% }) %>
+        <tr>
+          <td colspan="2"></td>
+          <td>
+            <strong><%= (total / movie.reviews.length).toFixed(1) %></strong>
+          </td>
+        </tr>
       </tbody>
     </table>
   <% } else { %>

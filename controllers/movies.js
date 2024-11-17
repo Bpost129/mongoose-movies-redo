@@ -9,9 +9,6 @@ function newMovie(req, res) {
 async function create(req, res) {
   try {
     req.body.nowShowing = !!req.body.nowShowing
-    if (req.body.cast) {
-      req.body.cast = req.body.cast.split(', ')
-    }
     for (let key in req.body) {
       if (req.body[key] === '') delete req.body[key]
     }
