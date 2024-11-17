@@ -26,4 +26,6 @@ router.delete('/:movieId', moviesCtrl.delete)
 // DELETE /movies/:movieId/reviews/:reviewId
 router.delete('/:movieId/reviews/:reviewId', moviesCtrl.deleteReview)
 
+router.put('/:movieId', moviesCtrl.update)
+
 export { router }

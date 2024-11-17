@@ -33,6 +33,17 @@ async function create(req, res) {
   }
 }
 
+async function update(req, res) {
+  try {
+    req.body.nowShowing = !!req.body.nowShowing
+    await Movie.findByIdAndUpdate(req.params.movieId, req.body, {new: true})
+    res.redirect(`/movies/${req.params.movieId}`)
+  } catch (error) {
+    console.log(error)
+    res.redirect('/movies')
+  }
+}
+
 async function index(req, res) {
   try {
     const movies = await Movie.find({})
@@ -105,6 +116,7 @@ export {
   newMovie as new,
   create,
   edit,
+  update,
   index,
   show,
   deleteMovie as delete,
