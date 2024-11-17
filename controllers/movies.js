@@ -6,6 +6,19 @@ function newMovie(req, res) {
   })
 }
 
+async function edit(req, res) {
+  try {
+    const movie = await Movie.findById(req.params.movieId)
+    res.render('movies/edit', {
+      movie: movie,
+      title: 'Edit Movie'
+    })
+  } catch (error) {
+    console.log(error)
+    res.redirect('/movies')
+  }
+}
+
 async function create(req, res) {
   try {
     req.body.nowShowing = !!req.body.nowShowing
@@ -91,6 +104,7 @@ async function deleteReview(req, res) {
 export {
   newMovie as new,
   create,
+  edit,
   index,
   show,
   deleteMovie as delete,

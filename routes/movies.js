@@ -12,6 +12,8 @@ router.get('/new', moviesCtrl.new)
 // GET /movies/:movieId
 router.get('/:movieId', moviesCtrl.show)
 
+router.get('/:movieId/edit', moviesCtrl.edit)
+
 // POST /movies
 router.post('/', moviesCtrl.create)
 
