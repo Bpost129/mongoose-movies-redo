@@ -1,15 +1,12 @@
 import { Performer } from "../models/performer.js"
 
-function newPerformer(req, res) {
+async function newPerformer(req, res) {
   try {
-    Performer.find({})
-    .then(performers => {
-      res.render('performers/new', {
-        title: 'Add Performer',
-        performers: performers
-      })
+    const performers = await Performer.find({})
+    res.render('performers/new', {
+      title: 'Add Performer',
+      performers: performers
     })
-    .catch
   } catch (error) {
     console.log(error)
     res.redirect('/')
@@ -19,7 +16,7 @@ function newPerformer(req, res) {
 async function create(req, res) {
   try {
     const performer = await Performer.create(req.body)
-    res.redirect(`/`)
+    res.redirect(`/performers/new`)
   } catch (error) {
     console.log(error)
     res.redirect('/performers/new')
