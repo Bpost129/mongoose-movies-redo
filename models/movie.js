@@ -27,7 +27,7 @@ const movieSchema = new Schema({
   },
   nowShowing: Boolean,
   reviews: [reviewSchema],
-  
+  cast: [{type: Schema.Types.ObjectId, ref: 'Performer'}]
 }, {
   timestamps: true
 })
