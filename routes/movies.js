@@ -20,6 +20,8 @@ router.post('/', moviesCtrl.create)
 // POST /movies/:movieId/reviews
 router.post('/:movieId/reviews', moviesCtrl.createReview)
 
+router.post('/:movieId/performers', moviesCtrl.addToCast)
+
 // DELETE /movies/:movieId
 router.delete('/:movieId', moviesCtrl.delete)
 

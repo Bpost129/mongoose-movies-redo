@@ -17,11 +17,24 @@
     <div>Now Showing: </div>
     <div><%= movie.nowShowing ? 'Yes' : 'Nope' %></div>
     <%# start cast list %>
-    
+    <div>Cast: </div>
+    <ul>
+      <% movie.cast.forEach(castMember => { %>
+        <li><%= castMember.name %></li>
+      <% }) %>
+    </ul>
     <%# end cast list %>
   </section>
   <%# add to cast form below this comment %>
-  
+  <form id="add-per-to-cast" action="/movies/<%= movie._id %>/performers" method="POST">
+    <select name="performerId">
+      <% performers.forEach(performer => { %>
+        <option value="<%= performer._id %>"><%= performer.name %></option>
+      <% }) %>
+    </select>
+    <button type="submit">Add to Cast</button>
+  </form>
+
   <h2>Reviews</h2>
   <form 
     id="add-review-form"

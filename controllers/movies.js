@@ -1,4 +1,5 @@
 import { Movie } from "../models/movie.js"
+import { Performer } from "../models/performer.js"
 
 function newMovie(req, res) {
   res.render('movies/new', {
@@ -26,7 +27,7 @@ async function create(req, res) {
       if (req.body[key] === '') delete req.body[key]
     }
     const movie = await Movie.create(req.body)
-    res.redirect(`/movies`)
+    res.redirect(`/movies/${movie._id}`)
   } catch (error) {
     console.log(error)
     res.redirect('/movies/new')
@@ -60,9 +61,12 @@ async function index(req, res) {
 async function show(req, res) {
   try {
     const movie = await Movie.findById(req.params.movieId)
+    movie.populate('cast')
+    const performers = await Performer.find({_id: {$nin: movie.cast}})
     res.render('movies/show', {
-      movie,
-      title: 'Movie Detail'
+      title: 'Movie Detail',
+      movie: movie,
+      performers: performers
     })
   } catch (error) {
     console.log(error)
@@ -112,6 +116,18 @@ async function deleteReview(req, res) {
   }
 }
 
+async function addToCast(req, res) {
+  try {
+    const movie = await Movie.findById(req.params.movieId)
+    movie.cast.push(req.body.performerId)
+    movie.save()
+    res.redirect(`/movies/${movie._id}`)
+  } catch (error) {
+    console.log(error)
+    res.redirect('/movies')
+  }
+}
+
 export {
   newMovie as new,
   create,
@@ -122,5 +138,6 @@ export {
   deleteMovie as delete,
   createReview,
   deleteReview,
+  addToCast,
 
 }
